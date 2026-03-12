@@ -3,104 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarjeta Digital - Editor Pro</title>
+    <title>Tarjeta Digital - Distrileco</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-green: #2d5a27;
-            --bg-gray: #f0f2f5;
-            --text-dark: #1c1e21;
-            --text-gray: #65676b;
+            --primary-blue: #0056b3;
+            --primary-red: #d9534f;
+            --white: #ffffff;
+            --bg-light: #f8f9fa;
+            --text-dark: #212529;
+            --text-gray: #6c757d;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-gray);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-blue); /* Fondo basado en el logo */
+            background-image: linear-gradient(135deg, var(--primary-blue) 0%, #003366 100%);
             margin: 0;
             display: flex;
             justify-content: center;
-        }
-
-        /* Indicador de Modo Edición */
-        .edit-mode [contenteditable="true"] {
-            outline: 2px dashed #3498db;
-            background-color: rgba(52, 152, 219, 0.05);
-            min-height: 1.2em;
+            min-height: 100vh;
         }
 
         .card-container {
             width: 100%;
             max-width: 450px;
             background: white;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
         }
 
-        /* Cabecera */
-        .header { position: relative; text-align: center; }
-        .cover-photo { width: 100%; height: 200px; object-fit: cover; background: #ddd; }
+        /* Cabecera con Paisaje de Abarrotes */
+        .header { 
+            position: relative; 
+            text-align: center; 
+            background: var(--white);
+        }
+        
+        .cover-photo { 
+            width: 100%; 
+            height: 220px; 
+            object-fit: cover; 
+            /* Imagen representativa de abarrotes con tonos azul/rojo */
+            background: url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop') center;
+            filter: brightness(0.8);
+        }
+
         .profile-logo { 
-            width: 120px; height: 120px; background: white; border-radius: 50%; 
-            border: 4px solid white; position: absolute; bottom: -60px; left: 50%; 
-            transform: translateX(-50%); box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            width: 130px; 
+            height: 130px; 
+            background: white; 
+            border-radius: 50%; 
+            border: 4px solid var(--primary-red); 
+            position: absolute; 
+            bottom: -65px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+            z-index: 2;
         }
 
         /* Info Empresa */
-        .business-info { margin-top: 70px; text-align: center; padding: 0 20px; }
-        .business-info h1 { font-size: 24px; margin-bottom: 5px; color: var(--text-dark); }
-        .phone-number { color: var(--text-gray); font-size: 18px; margin-bottom: 20px; }
+        .business-info { margin-top: 75px; text-align: center; padding: 0 20px; }
+        .business-info h1 { font-size: 26px; margin-bottom: 5px; color: var(--primary-blue); text-transform: uppercase; }
+        .business-id { color: var(--text-gray); font-size: 14px; margin-bottom: 10px; }
+        .phone-number { color: var(--primary-red); font-size: 20px; font-weight: bold; margin-bottom: 20px; }
 
         /* Botones de Acción */
         .action-buttons {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; 
-            padding: 20px; border-bottom: 8px solid var(--bg-gray);
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 15px; 
+            padding: 20px; 
+            background: var(--bg-light);
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
         }
 
         .btn-item {
             display: flex; flex-direction: column; align-items: center; 
-            text-decoration: none; color: var(--text-dark); font-size: 14px;
-            background: none; border: none; cursor: pointer;
+            text-decoration: none; color: var(--text-dark); font-size: 13px; font-weight: 600;
         }
 
         .btn-icon {
-            width: 50px; height: 50px; border: 1px solid #e4e6eb; border-radius: 12px; 
+            width: 55px; height: 55px; 
+            background: white;
+            border: 2px solid var(--primary-blue); 
+            border-radius: 50%; 
             display: flex; justify-content: center; align-items: center; 
-            margin-bottom: 8px; color: var(--primary-green); font-size: 20px;
+            margin-bottom: 8px; color: var(--primary-blue); font-size: 22px;
+            transition: 0.3s;
         }
 
-        /* Catálogo */
-        .section { padding: 20px; }
-        .catalog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
-        .catalog-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; background: #eee; }
+        .btn-icon:hover { background: var(--primary-blue); color: white; }
 
-        /* Detalles */
+        /* Catálogo de Marcas */
+        .section { padding: 25px 20px; }
+        .section h2 { font-size: 18px; color: var(--primary-blue); border-left: 4px solid var(--primary-red); padding-left: 10px; }
+        
+        .catalog-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 10px; 
+            margin-top: 15px;
+        }
+        
+        .catalog-grid img { 
+            width: 100%; 
+            aspect-ratio: 1; 
+            object-fit: contain; 
+            border-radius: 8px; 
+            border: 1px solid #eee;
+            padding: 5px;
+        }
+
+        /* Redes y Ubicación */
         .info-list { list-style: none; padding: 0; margin: 0; }
         .info-item {
-            display: flex; padding: 15px 20px; border-bottom: 1px solid #eee; 
+            display: flex; padding: 15px 20px; border-bottom: 1px solid #f0f0f0; 
             align-items: center; text-decoration: none; color: var(--text-dark);
         }
-        .info-item i { width: 30px; color: var(--text-gray); font-size: 18px; }
+        .info-item i { width: 35px; color: var(--primary-blue); font-size: 20px; }
+        .info-item b { color: var(--primary-red); }
 
-        /* Footer Créditos */
+        /* Footer */
         .footer-credits {
             margin-top: auto;
-            padding: 30px 20px;
+            padding: 25px;
             text-align: center;
-            background-color: var(--bg-gray);
-            font-size: 12px;
+            background-color: var(--bg-light);
+            font-size: 13px;
             color: var(--text-gray);
+            border-top: 1px solid #eee;
         }
 
-        /* Botón Flotante para el dueño */
         #edit-toggle {
             position: fixed; bottom: 20px; right: 20px; 
-            background: var(--primary-green); color: white;
+            background: var(--primary-red); color: white;
             border: none; border-radius: 50%; width: 60px; height: 60px;
             font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer;
             z-index: 1000;
         }
+
+        .edit-mode [contenteditable="true"] { background: #fffde7; padding: 2px 5px; border-radius: 4px; }
     </style>
 </head>
 <body class="edit-mode">
@@ -109,67 +156,64 @@
 
 <div class="card-container">
     <div class="header">
-        <img src="https://via.placeholder.com/800x400" alt="Portada" class="cover-photo">
-        <img src="https://via.placeholder.com/150" alt="Logo" class="profile-logo">
+        <div class="cover-photo"></div>
+        <img src="logodistrileco.jpg" alt="Logo Distrileco" class="profile-logo">
     </div>
 
     <div class="business-info">
-        <h1 contenteditable="true" id="companyName">Nombre de tu Empresa</h1>
-        <div class="phone-number" contenteditable="true" id="companyPhone">+57 000 0000000</div>
+        <h1 contenteditable="true" id="companyName">DISTRILECO</h1>
+        <div class="business-id" contenteditable="true">NIT: 901.234.567-8</div>
+        <div class="phone-number" contenteditable="true" id="companyPhone">320 613 4987</div>
     </div>
 
     <div class="action-buttons">
-        <a href="tel:3243997959" id="callBtn" class="btn-item">
+        <a href="tel:3206134987" id="callBtn" class="btn-item">
             <div class="btn-icon"><i class="fa-solid fa-phone"></i></div>
             Llamar
         </a>
-        <a href="#" class="btn-item">
-            <div class="btn-icon"><i class="fa-solid fa-book"></i></div>
+        <a href="catalogo2026.pdf" target="_blank" class="btn-item">
+            <div class="btn-icon"><i class="fa-solid fa-file-pdf"></i></div>
             Catálogo
         </a>
-        <button onclick="compartir()" class="btn-item">
-            <div class="btn-icon"><i class="fa-solid fa-share"></i></div>
-            Comp.
+        <button onclick="compartir()" class="btn-item" style="background:none; border:none; cursor:pointer;">
+            <div class="btn-icon"><i class="fa-solid fa-share-nodes"></i></div>
+            Compartir
         </button>
-        <a href="https://maps.google.com" target="_blank" class="btn-item">
-            <div class="btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-            Buscar
-        </a>
     </div>
 
     <div class="section">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <h2 contenteditable="true">Catálogo</h2>
-            <a href="#" class="view-all">Ver todos ></a>
-        </div>
-        <div class="catalog-grid" id="catalog">
-            <img src="https://via.placeholder.com/200" alt="Finca 1">
-            <img src="https://via.placeholder.com/200" alt="Finca 2">
-            <img src="https://via.placeholder.com/200" alt="Finca 3">
+        <h2>Nuestras Marcas</h2>
+        <div class="catalog-grid">
+            <img src="superarroz.jpeg" alt="Super Arroz">
+            <img src="vistahermosa.jpeg" alt="Vista Hermosa">
+            <img src="proleche.jpeg" alt="Proleche">
+            <img src="brinsa.jpeg" alt="Brinsa">
+            <img src="berhlan.jpeg" alt="Berhlan">
+            <img src="jirafa.jpeg" alt="Jirafa">
         </div>
     </div>
 
     <ul class="info-list">
         <li class="info-item">
-            <i class="fa-regular fa-clock"></i>
-            <div contenteditable="true">
-                <span style="color: #25d366; font-weight: bold;">Abierto ahora</span><br>
-                <small>9:00 a.m. - 8:00 p.m.</small>
+            <i class="fa-solid fa-location-dot"></i>
+            <div>
+                <b>CAUCASIA, ANTIOQUIA</b><br>
+                <small contenteditable="true">Dirección de la distribuidora</small>
             </div>
         </li>
-        <li class="info-item">
+        <a href="https://www.instagram.com/distrileco_caucasia?igsh=MTJjcWZmbzd4ODJsbQ==" target="_blank" class="info-item">
+            <i class="fa-brands fa-instagram"></i>
+            <div>Instagram @distrileco_caucasia</div>
+        </a>
+        <a href="https://www.facebook.com/share/14UHAwvBqu3/" target="_blank" class="info-item">
             <i class="fa-brands fa-facebook"></i>
-            <div contenteditable="true">Síguenos en Facebook</div>
-        </li>
-        <li class="info-item">
-            <i class="fa-solid fa-location-dot"></i>
-            <div contenteditable="true">Ciudad, País</div>
-        </li>
+            <div>Facebook Distrileco</div>
+        </a>
     </ul>
 
     <footer class="footer-credits">
         App desarrollada por <b>Vibras Positivas</b><br>
-        © Derechos de autor - (311 770 0431)
+        © Derechos de autor - <b>(311 770 0431)</b>
     </footer>
 </div>
 
@@ -178,29 +222,29 @@
     const phoneElement = document.getElementById('companyPhone');
     const callBtn = document.getElementById('callBtn');
 
-    // Al guardar, actualizamos el link del botón llamar automáticamente
     saveBtn.addEventListener('click', () => {
         const cleanPhone = phoneElement.innerText.replace(/\s+/g, '');
         callBtn.setAttribute('href', 'tel:' + cleanPhone);
         
-        alert("¡Datos actualizados en la tarjeta! Recuerda que para que los cambios sean permanentes debes guardar este archivo HTML.");
-        
-        // Opcional: Desactivar modo edición para ver como queda
         document.body.classList.toggle('edit-mode');
-        saveBtn.innerHTML = document.body.classList.contains('edit-mode') ? 
-            '<i class="fa-solid fa-save"></i>' : '<i class="fa-solid fa-pencil"></i>';
+        const isEditing = document.body.classList.contains('edit-mode');
+        
+        saveBtn.innerHTML = isEditing ? '<i class="fa-solid fa-save"></i>' : '<i class="fa-solid fa-pencil"></i>';
+        
+        if(!isEditing) {
+            alert("¡Cambios guardados visualmente! Para que sean permanentes, guarda el archivo en tu dispositivo.");
+        }
     });
 
-    // Función compartir real
     function compartir() {
         if (navigator.share) {
             navigator.share({
-                title: document.getElementById('companyName').innerText,
-                text: 'Te comparto mi tarjeta digital profesional.',
+                title: 'Distrileco - Tarjeta Digital',
+                text: 'Te comparto los datos de contacto y catálogo de Distrileco Caucasia.',
                 url: window.location.href
             }).catch(console.error);
         } else {
-            alert("Enlace copiado al portapapeles");
+            alert("Enlace: " + window.location.href);
         }
     }
 </script>
