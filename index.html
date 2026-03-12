@@ -17,7 +17,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--primary-blue); /* Fondo basado en el logo */
+            background-color: var(--primary-blue);
             background-image: linear-gradient(135deg, var(--primary-blue) 0%, #003366 100%);
             margin: 0;
             display: flex;
@@ -35,7 +35,7 @@
             position: relative;
         }
 
-        /* Cabecera con Paisaje de Abarrotes */
+        /* Cabecera con Productos de Abarrotes */
         .header { 
             position: relative; 
             text-align: center; 
@@ -46,9 +46,9 @@
             width: 100%; 
             height: 220px; 
             object-fit: cover; 
-            /* Imagen representativa de abarrotes con tonos azul/rojo */
-            background: url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop') center;
-            filter: brightness(0.8);
+            /* Imagen de estantería de supermercado con abarrotes reales */
+            background: url('https://images.unsplash.com/photo-1534723452862-4c874018d66d?q=80&w=1000&auto=format&fit=crop') center;
+            filter: brightness(0.9);
         }
 
         .profile-logo { 
@@ -67,7 +67,7 @@
 
         /* Info Empresa */
         .business-info { margin-top: 75px; text-align: center; padding: 0 20px; }
-        .business-info h1 { font-size: 26px; margin-bottom: 5px; color: var(--primary-blue); text-transform: uppercase; }
+        .business-info h1 { font-size: 24px; margin-bottom: 5px; color: var(--primary-blue); text-transform: uppercase; font-weight: 800; }
         .business-id { color: var(--text-gray); font-size: 14px; margin-bottom: 10px; }
         .phone-number { color: var(--primary-red); font-size: 20px; font-weight: bold; margin-bottom: 20px; }
 
@@ -101,13 +101,12 @@
 
         /* Catálogo de Marcas */
         .section { padding: 25px 20px; }
-        .section h2 { font-size: 18px; color: var(--primary-blue); border-left: 4px solid var(--primary-red); padding-left: 10px; }
+        .section h2 { font-size: 18px; color: var(--primary-blue); border-left: 4px solid var(--primary-red); padding-left: 10px; margin-bottom: 15px; }
         
         .catalog-grid { 
             display: grid; 
             grid-template-columns: repeat(3, 1fr); 
             gap: 10px; 
-            margin-top: 15px;
         }
         
         .catalog-grid img { 
@@ -117,6 +116,7 @@
             border-radius: 8px; 
             border: 1px solid #eee;
             padding: 5px;
+            background: white;
         }
 
         /* Redes y Ubicación */
@@ -134,7 +134,7 @@
             padding: 25px;
             text-align: center;
             background-color: var(--bg-light);
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-gray);
             border-top: 1px solid #eee;
         }
@@ -194,17 +194,19 @@
     </div>
 
     <ul class="info-list">
-        <li class="info-item">
+        <a href="https://www.google.com/maps/search/Distrileco+Caucasia+Antioquia" target="_blank" class="info-item">
             <i class="fa-solid fa-location-dot"></i>
             <div>
                 <b>CAUCASIA, ANTIOQUIA</b><br>
-                <small contenteditable="true">Dirección de la distribuidora</small>
+                <small contenteditable="true">Toca aquí para ver ubicación GPS</small>
             </div>
-        </li>
+        </a>
+        
         <a href="https://www.instagram.com/distrileco_caucasia?igsh=MTJjcWZmbzd4ODJsbQ==" target="_blank" class="info-item">
             <i class="fa-brands fa-instagram"></i>
             <div>Instagram @distrileco_caucasia</div>
         </a>
+        
         <a href="https://www.facebook.com/share/14UHAwvBqu3/" target="_blank" class="info-item">
             <i class="fa-brands fa-facebook"></i>
             <div>Facebook Distrileco</div>
@@ -232,7 +234,7 @@
         saveBtn.innerHTML = isEditing ? '<i class="fa-solid fa-save"></i>' : '<i class="fa-solid fa-pencil"></i>';
         
         if(!isEditing) {
-            alert("¡Cambios guardados visualmente! Para que sean permanentes, guarda el archivo en tu dispositivo.");
+            alert("¡Cambios guardados visualmente!");
         }
     });
 
@@ -240,7 +242,7 @@
         if (navigator.share) {
             navigator.share({
                 title: 'Distrileco - Tarjeta Digital',
-                text: 'Te comparto los datos de contacto y catálogo de Distrileco Caucasia.',
+                text: 'Contacto y Catálogo de Distrileco Caucasia.',
                 url: window.location.href
             }).catch(console.error);
         } else {
