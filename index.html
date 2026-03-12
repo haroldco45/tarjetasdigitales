@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarjeta Digital - Plantilla Pro</title>
+    <title>Tarjeta Digital - Editor Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2d5a27;
+            --primary-green: #2d5a27;
             --bg-gray: #f0f2f5;
             --text-dark: #1c1e21;
             --text-gray: #65676b;
@@ -19,6 +19,13 @@
             margin: 0;
             display: flex;
             justify-content: center;
+        }
+
+        /* Indicador de Modo Edición */
+        .edit-mode [contenteditable="true"] {
+            outline: 2px dashed #3498db;
+            background-color: rgba(52, 152, 219, 0.05);
+            min-height: 1.2em;
         }
 
         .card-container {
@@ -33,13 +40,14 @@
 
         /* Cabecera */
         .header { position: relative; text-align: center; }
-        .cover-photo { width: 100%; height: 200px; object-fit: cover; background: #ccc; }
+        .cover-photo { width: 100%; height: 200px; object-fit: cover; background: #ddd; }
         .profile-logo { 
             width: 120px; height: 120px; background: white; border-radius: 50%; 
             border: 4px solid white; position: absolute; bottom: -60px; left: 50%; 
             transform: translateX(-50%); box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
         }
 
+        /* Info Empresa */
         .business-info { margin-top: 70px; text-align: center; padding: 0 20px; }
         .business-info h1 { font-size: 24px; margin-bottom: 5px; color: var(--text-dark); }
         .phone-number { color: var(--text-gray); font-size: 18px; margin-bottom: 20px; }
@@ -53,13 +61,13 @@
         .btn-item {
             display: flex; flex-direction: column; align-items: center; 
             text-decoration: none; color: var(--text-dark); font-size: 14px;
-            background: none; border: none; cursor: pointer; padding: 0;
+            background: none; border: none; cursor: pointer;
         }
 
         .btn-icon {
             width: 50px; height: 50px; border: 1px solid #e4e6eb; border-radius: 12px; 
             display: flex; justify-content: center; align-items: center; 
-            margin-bottom: 8px; color: var(--primary-color); font-size: 20px;
+            margin-bottom: 8px; color: var(--primary-green); font-size: 20px;
         }
 
         /* Catálogo */
@@ -67,14 +75,13 @@
         .catalog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
         .catalog-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; background: #eee; }
 
-        /* Lista de Info */
+        /* Detalles */
         .info-list { list-style: none; padding: 0; margin: 0; }
         .info-item {
             display: flex; padding: 15px 20px; border-bottom: 1px solid #eee; 
             align-items: center; text-decoration: none; color: var(--text-dark);
         }
         .info-item i { width: 30px; color: var(--text-gray); font-size: 18px; }
-        .status-open { color: #25d366; font-weight: bold; }
 
         /* Footer Créditos */
         .footer-credits {
@@ -82,14 +89,23 @@
             padding: 30px 20px;
             text-align: center;
             background-color: var(--bg-gray);
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-gray);
-            line-height: 1.6;
         }
-        .footer-credits b { color: var(--text-dark); }
+
+        /* Botón Flotante para el dueño */
+        #edit-toggle {
+            position: fixed; bottom: 20px; right: 20px; 
+            background: var(--primary-green); color: white;
+            border: none; border-radius: 50%; width: 60px; height: 60px;
+            font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer;
+            z-index: 1000;
+        }
     </style>
 </head>
-<body>
+<body class="edit-mode">
+
+<button id="edit-toggle" title="Guardar cambios"><i class="fa-solid fa-save"></i></button>
 
 <div class="card-container">
     <div class="header">
@@ -98,24 +114,24 @@
     </div>
 
     <div class="business-info">
-        <h1>[Nombre de la Empresa]</h1>
-        <div class="phone-number">[Celular de Contacto]</div>
+        <h1 contenteditable="true" id="companyName">Nombre de tu Empresa</h1>
+        <div class="phone-number" contenteditable="true" id="companyPhone">+57 000 0000000</div>
     </div>
 
     <div class="action-buttons">
-        <a href="tel:+573243997959" class="btn-item">
+        <a href="tel:3243997959" id="callBtn" class="btn-item">
             <div class="btn-icon"><i class="fa-solid fa-phone"></i></div>
             Llamar
         </a>
-        <a href="https://wa.me/c/573243997959" target="_blank" class="btn-item">
+        <a href="#" class="btn-item">
             <div class="btn-icon"><i class="fa-solid fa-book"></i></div>
             Catálogo
         </a>
-        <button onclick="compartirApp()" class="btn-item">
+        <button onclick="compartir()" class="btn-item">
             <div class="btn-icon"><i class="fa-solid fa-share"></i></div>
             Comp.
         </button>
-        <a href="https://www.google.com/maps/search/?api=1&query=Cali+Valle+del+Cauca" target="_blank" class="btn-item">
+        <a href="https://maps.google.com" target="_blank" class="btn-item">
             <div class="btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
             Buscar
         </a>
@@ -123,51 +139,68 @@
 
     <div class="section">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <h2 style="margin:0; font-size: 20px;">Catálogo</h2>
-            <small style="color: var(--text-gray);">Ver todos ></small>
+            <h2 contenteditable="true">Catálogo</h2>
+            <a href="#" class="view-all">Ver todos ></a>
         </div>
-        <div class="catalog-grid">
-            <img src="https://via.placeholder.com/200" alt="Propiedad 1">
-            <img src="https://via.placeholder.com/200" alt="Propiedad 2">
-            <img src="https://via.placeholder.com/200" alt="Propiedad 3">
+        <div class="catalog-grid" id="catalog">
+            <img src="https://via.placeholder.com/200" alt="Finca 1">
+            <img src="https://via.placeholder.com/200" alt="Finca 2">
+            <img src="https://via.placeholder.com/200" alt="Finca 3">
         </div>
     </div>
 
     <ul class="info-list">
         <li class="info-item">
             <i class="fa-regular fa-clock"></i>
-            <div>
-                <span class="status-open">Abierto ahora</span><br>
+            <div contenteditable="true">
+                <span style="color: #25d366; font-weight: bold;">Abierto ahora</span><br>
                 <small>9:00 a.m. - 8:00 p.m.</small>
             </div>
         </li>
-        <a href="https://facebook.com/TU_PAGINA" target="_blank" class="info-item">
+        <li class="info-item">
             <i class="fa-brands fa-facebook"></i>
-            <div>Seguir en Facebook</div>
-        </a>
+            <div contenteditable="true">Síguenos en Facebook</div>
+        </li>
         <li class="info-item">
             <i class="fa-solid fa-location-dot"></i>
-            <div>Ubicación, Ciudad, País</div>
+            <div contenteditable="true">Ciudad, País</div>
         </li>
     </ul>
 
     <footer class="footer-credits">
         App desarrollada por <b>Vibras Positivas</b><br>
-        Derechos de autor &copy; 2026<br>
-        Contacto: <a href="https://wa.me/573117700431" style="color: inherit; text-decoration: none;">311 770 0431</a>
+        © Derechos de autor - (311 770 0431)
     </footer>
 </div>
 
 <script>
-    function compartirApp() {
+    const saveBtn = document.getElementById('edit-toggle');
+    const phoneElement = document.getElementById('companyPhone');
+    const callBtn = document.getElementById('callBtn');
+
+    // Al guardar, actualizamos el link del botón llamar automáticamente
+    saveBtn.addEventListener('click', () => {
+        const cleanPhone = phoneElement.innerText.replace(/\s+/g, '');
+        callBtn.setAttribute('href', 'tel:' + cleanPhone);
+        
+        alert("¡Datos actualizados en la tarjeta! Recuerda que para que los cambios sean permanentes debes guardar este archivo HTML.");
+        
+        // Opcional: Desactivar modo edición para ver como queda
+        document.body.classList.toggle('edit-mode');
+        saveBtn.innerHTML = document.body.classList.contains('edit-mode') ? 
+            '<i class="fa-solid fa-save"></i>' : '<i class="fa-solid fa-pencil"></i>';
+    });
+
+    // Función compartir real
+    function compartir() {
         if (navigator.share) {
             navigator.share({
-                title: 'Tarjeta Digital Profesional',
-                text: 'Te comparto el contacto de mi empresa. ¡Mira nuestro catálogo!',
+                title: document.getElementById('companyName').innerText,
+                text: 'Te comparto mi tarjeta digital profesional.',
                 url: window.location.href
             }).catch(console.error);
         } else {
-            alert("Copia este enlace para compartir: " + window.location.href);
+            alert("Enlace copiado al portapapeles");
         }
     }
 </script>
