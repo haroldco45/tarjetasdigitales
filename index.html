@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarjeta Digital - Fincas Cali</title>
+    <title>Tarjeta Digital - Plantilla Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-green: #2d5a27;
+            --primary-color: #2d5a27;
             --bg-gray: #f0f2f5;
             --text-dark: #1c1e21;
             --text-gray: #65676b;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-gray);
             margin: 0;
             display: flex;
@@ -26,148 +26,80 @@
             max-width: 450px;
             background: white;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
         /* Cabecera */
-        .header {
-            position: relative;
-            text-align: center;
+        .header { position: relative; text-align: center; }
+        .cover-photo { width: 100%; height: 200px; object-fit: cover; background: #ccc; }
+        .profile-logo { 
+            width: 120px; height: 120px; background: white; border-radius: 50%; 
+            border: 4px solid white; position: absolute; bottom: -60px; left: 50%; 
+            transform: translateX(-50%); box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
         }
 
-        .cover-photo {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .profile-logo {
-            width: 120px;
-            height: 120px;
-            background: white;
-            border-radius: 50%;
-            border: 4px solid white;
-            position: absolute;
-            bottom: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .business-info {
-            margin-top: 70px;
-            text-align: center;
-            padding: 0 20px;
-        }
-
-        .business-info h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-            color: var(--text-dark);
-        }
-
-        .phone-number {
-            color: var(--text-gray);
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
+        .business-info { margin-top: 70px; text-align: center; padding: 0 20px; }
+        .business-info h1 { font-size: 24px; margin-bottom: 5px; color: var(--text-dark); }
+        .phone-number { color: var(--text-gray); font-size: 18px; margin-bottom: 20px; }
 
         /* Botones de Acción */
         .action-buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            padding: 20px;
-            border-bottom: 8px solid var(--bg-gray);
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; 
+            padding: 20px; border-bottom: 8px solid var(--bg-gray);
         }
 
         .btn-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text-dark);
-            font-size: 14px;
+            display: flex; flex-direction: column; align-items: center; 
+            text-decoration: none; color: var(--text-dark); font-size: 14px;
+            background: none; border: none; cursor: pointer; padding: 0;
         }
 
         .btn-icon {
-            width: 50px;
-            height: 50px;
-            border: 1px solid #e4e6eb;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 8px;
-            color: var(--primary-green);
-            font-size: 20px;
+            width: 50px; height: 50px; border: 1px solid #e4e6eb; border-radius: 12px; 
+            display: flex; justify-content: center; align-items: center; 
+            margin-bottom: 8px; color: var(--primary-color); font-size: 20px;
         }
 
-        /* Catálogo Grid */
-        .section {
-            padding: 20px;
-        }
+        /* Catálogo */
+        .section { padding: 20px; }
+        .catalog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+        .catalog-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; background: #eee; }
 
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .section-header h2 { font-size: 20px; margin: 0; }
-        .view-all { color: var(--text-gray); text-decoration: none; font-size: 16px; }
-
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 5px;
-        }
-
-        .catalog-grid img {
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        /* Detalles de Empresa */
-        .info-list {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
-            border-top: 8px solid var(--bg-gray);
-        }
-
+        /* Lista de Info */
+        .info-list { list-style: none; padding: 0; margin: 0; }
         .info-item {
-            display: flex;
-            padding: 15px 20px;
-            border-bottom: 1px solid #eee;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text-dark);
+            display: flex; padding: 15px 20px; border-bottom: 1px solid #eee; 
+            align-items: center; text-decoration: none; color: var(--text-dark);
         }
-
-        .info-item i {
-            width: 30px;
-            color: var(--text-gray);
-            font-size: 18px;
-        }
-
+        .info-item i { width: 30px; color: var(--text-gray); font-size: 18px; }
         .status-open { color: #25d366; font-weight: bold; }
 
+        /* Footer Créditos */
+        .footer-credits {
+            margin-top: auto;
+            padding: 30px 20px;
+            text-align: center;
+            background-color: var(--bg-gray);
+            font-size: 13px;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+        .footer-credits b { color: var(--text-dark); }
     </style>
 </head>
 <body>
 
 <div class="card-container">
     <div class="header">
-        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80" alt="Portada" class="cover-photo">
-        <img src="https://via.placeholder.com/150" alt="Logo" class="profile-logo"> </div>
+        <img src="https://via.placeholder.com/800x400" alt="Portada" class="cover-photo">
+        <img src="https://via.placeholder.com/150" alt="Logo" class="profile-logo">
+    </div>
 
     <div class="business-info">
-        <h1>Alquiler de Fincas Cali</h1>
-        <div class="phone-number">+57 324 3997959</div>
+        <h1>[Nombre de la Empresa]</h1>
+        <div class="phone-number">[Celular de Contacto]</div>
     </div>
 
     <div class="action-buttons">
@@ -175,32 +107,29 @@
             <div class="btn-icon"><i class="fa-solid fa-phone"></i></div>
             Llamar
         </a>
-        <a href="#" class="btn-item">
+        <a href="https://wa.me/c/573243997959" target="_blank" class="btn-item">
             <div class="btn-icon"><i class="fa-solid fa-book"></i></div>
             Catálogo
         </a>
-        <a href="#" class="btn-item">
+        <button onclick="compartirApp()" class="btn-item">
             <div class="btn-icon"><i class="fa-solid fa-share"></i></div>
             Comp.
-        </a>
-        <a href="#" class="btn-item">
+        </button>
+        <a href="https://www.google.com/maps/search/?api=1&query=Cali+Valle+del+Cauca" target="_blank" class="btn-item">
             <div class="btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
             Buscar
         </a>
     </div>
 
     <div class="section">
-        <div class="section-header">
-            <h2>Catálogo</h2>
-            <a href="#" class="view-all">Ver todos ></a>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h2 style="margin:0; font-size: 20px;">Catálogo</h2>
+            <small style="color: var(--text-gray);">Ver todos ></small>
         </div>
         <div class="catalog-grid">
-            <img src="https://images.unsplash.com/photo-1540339832862-47452993c66b?w=200" alt="Piscina">
-            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=200" alt="Casa">
-            <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=200" alt="Vista">
-            <img src="https://images.unsplash.com/photo-1600585154340-be6191ec95b1?w=200" alt="Interior">
-            <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=200" alt="Jardin">
-            <img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=200" alt="Piscina2">
+            <img src="https://via.placeholder.com/200" alt="Propiedad 1">
+            <img src="https://via.placeholder.com/200" alt="Propiedad 2">
+            <img src="https://via.placeholder.com/200" alt="Propiedad 3">
         </div>
     </div>
 
@@ -212,26 +141,36 @@
                 <small>9:00 a.m. - 8:00 p.m.</small>
             </div>
         </li>
-        <a href="https://facebook.com" class="info-item">
+        <a href="https://facebook.com/TU_PAGINA" target="_blank" class="info-item">
             <i class="fa-brands fa-facebook"></i>
-            <div>
-                Fincas Cali<br>
-                <small>Facebook • 548 me gusta</small>
-            </div>
-        </a>
-        <a href="https://instagram.com" class="info-item">
-            <i class="fa-brands fa-instagram"></i>
-            <div>
-                @fincascali1<br>
-                <small>Instagram • 1.852 seguidores</small>
-            </div>
+            <div>Seguir en Facebook</div>
         </a>
         <li class="info-item">
             <i class="fa-solid fa-location-dot"></i>
-            <div>Cali, Valle del Cauca, Colombia</div>
+            <div>Ubicación, Ciudad, País</div>
         </li>
     </ul>
+
+    <footer class="footer-credits">
+        App desarrollada por <b>Vibras Positivas</b><br>
+        Derechos de autor &copy; 2026<br>
+        Contacto: <a href="https://wa.me/573117700431" style="color: inherit; text-decoration: none;">311 770 0431</a>
+    </footer>
 </div>
+
+<script>
+    function compartirApp() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Tarjeta Digital Profesional',
+                text: 'Te comparto el contacto de mi empresa. ¡Mira nuestro catálogo!',
+                url: window.location.href
+            }).catch(console.error);
+        } else {
+            alert("Copia este enlace para compartir: " + window.location.href);
+        }
+    }
+</script>
 
 </body>
 </html>
